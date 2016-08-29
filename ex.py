@@ -5,7 +5,8 @@ __autor__ = 'm.shoshin'
 # f.close()
 
 import re
-a = []
+p = []
 comp = re.compile(r'import (.+)\n')
-p = re.findall(comp, 'import asv\n       sdfdff dsfsdf s df sdf sdfsd\n  f sdfsdf import ewr\n dfgdg')
+p = p + re.findall(comp, 'import asv\n       sdfdff dsfsdf s df sdf sdfsd\n  f sdfsdf import ewr\n dfgdg')
 print(p)
+# p = p.append(re.findall(comp, 'import edfg\n       sdfdff dsfsdf s df sdf sdfsd\n  f sdfsdf import wedf\n dfgdg'))
