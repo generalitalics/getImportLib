@@ -9,6 +9,8 @@ import shutil
 
 from datetime import datetime
 
+comp = re.compile(r'import (.+)\n')
+p = []
 print('\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n')
 
 time_start = datetime.now()
@@ -26,14 +28,14 @@ for d, dirs, files in os.walk(directory):
     for f in files:
         path = os.path.join(d, f) # формирование адреса
         path_f.append(path) # добавление адреса в список
-print(path_f)
+# print(path_f)
 pyFiles = filter(lambda x: x.endswith('.py'), path_f)
 for i in pyFiles:
     print("|   ", '{:<120}'.format(i), "|")
     with open(i, encoding='utf-8') as f:
         try:
             lines = f.readlines()
-            print("lines:", lines)
+            p = re.findall(comp, lines)
         except:
             print("Ошибка")
     #     # result = re.finditer(r"", lines)
@@ -42,6 +44,7 @@ for i in pyFiles:
     # #     match.groups()
 
 # print(files)
+print(p)
 data = None
 # with open(source) as f:
 #     lines = f.readlines()
