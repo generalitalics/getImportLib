@@ -9,12 +9,19 @@ import shutil
 
 from datetime import datetime
 
-comp = re.compile(r'import (\S+)\s')
-comp1 = re.compile(r'from (.+) import (\S+)\s')
+comp = re.compile(r'import (\S+?)\s')
+comp1 = re.compile(r'from (\S) import \S+?\s')
 p = []
-print('\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n')
+dictLog = {}
+print('\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n')
 
 time_start = datetime.now()
+
+res_dir = os.path.join(".", "for_Lera")
+print('Running      : [' + sys.argv[0] + ']')
+print('Diectory   : [' + sys.argv[1] + ']')
+print('Wait...',)
+print()
 
 
 source = os.path.join(".", sys.argv[1])
@@ -23,9 +30,8 @@ source = os.path.join(".", sys.argv[1])
 
 directory = sys.argv[1]
 files = os.listdir(directory)
-print(directory)
+print("Список файлов *.py")
 path_f = []
-p = []
 for d, dirs, files in os.walk(directory):
     for f in files:
         path = os.path.join(d, f) # формирование адреса
@@ -37,30 +43,29 @@ for i in pyFiles:
     with open(i, encoding='utf-8') as f:
         try:
             lines = f.readlines()
+            dictLog[i] = []
             for line in lines:
-                p = p + re.findall(comp, line)
-                p = p + re.findall(comp1, line)
-                # print(type(line))
+                for j in re.findall(comp, line):
+                    dictLog[i].append(j)
+                for k in re.findall(comp1, line):
+                    dictLog[i].append(k)
         except:
             print("Ошибка! Не прочитался файл: ", i)
 
-# print(files)
-print(p)
 
+p = set(p)
+print(p)
+print(dictLog)
 data = None
 # with open(source) as f:
 #     lines = f.readlines()
 
 
-res_dir = os.path.join(".", "for_Lera")
-print('Running      : [' + sys.argv[0] + ']')
-print('Conversion   : [' + sys.argv[1] + ']')
-print('Wait...',)
 
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)
 
-print('OK')
+print('\nOK')
 # сколько выполнялась это чудесная програмуля
 time_end = datetime.now()
 time_delta = time_start - time_end
