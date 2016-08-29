@@ -30,12 +30,12 @@ print(path_f)
 pyFiles = filter(lambda x: x.endswith('.py'), path_f)
 for i in pyFiles:
     print("|   ", '{:<120}'.format(i), "|")
-    # with open(i) as f:
-    #     try:
-    #         lines = f.readlines()
-    #         print("lines:", lines)
-    #     except:
-    #         print("Ошибка")
+    with open(i, encoding='utf-8') as f:
+        try:
+            lines = f.readlines()
+            print("lines:", lines)
+        except:
+            print("Ошибка")
     #     # result = re.finditer(r"", lines)
     # # for match in result:
     # #     print
