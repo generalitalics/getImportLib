@@ -60,6 +60,7 @@ data = None
 # with open(source) as f:
 #     lines = f.readlines()
 
+# TODO с помощью https://tech.yandex.ru/xml/ заюзать Яндкс.Поиск API
 
 
 if not os.path.exists(res_dir):
