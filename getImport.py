@@ -6,13 +6,16 @@ import os
 import re
 import sys
 import shutil
+fileName = 'Log.txt'
 
 from datetime import datetime
+
 
 comp = re.compile(r'import (\S+?)\s')
 comp1 = re.compile(r'from (\S) import \S+?\s')
 p = []
 dictLog = {}
+temp = []
 print('\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n')
 
 time_start = datetime.now()
@@ -56,12 +59,25 @@ for i in pyFiles:
 p = set(p)
 print(p)
 print(dictLog)
-data = None
-# with open(source) as f:
-#     lines = f.readlines()
+
+# Заиписываем лог
+os.remove(fileName)
+with open(fileName, 'w', encoding='utf-8') as f:
+    for i in dictLog:
+        f.write('Файл [')
+        f.write(i)
+        f.write(']:\n')
+        for j in range(len(dictLog[i])):
+            f.write('|')
+            f.write(dictLog[i][j])
+            if dictLog[i][j] not in temp:
+                f.write('| описание.....')
+                f.write('\n')
+                temp.append(dictLog[i][j])
+            else:
+                f.write('| <описание библиотеи выше>\n')
 
 # TODO с помощью https://tech.yandex.ru/xml/ заюзать Яндкс.Поиск API
-
 
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)
