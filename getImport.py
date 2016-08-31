@@ -5,14 +5,25 @@ __autor__ = 'm.shoshin'
 import os
 import re
 import sys
-import shutil
 fileName = 'Log.txt'
+dirName = r'C:\getImportLib'
+libName = 'android'
+tempName = r'C:\getImportLib\tempLog.txt'
 
 from datetime import datetime
+
+def tempParse(liblib):
+    if os.path.exists(tempName):
+        os.remove(tempName)
+    with open("C:\getImportLib\search.bat", 'w', encoding='utf-8') as f:
+        f.write('@echo off\ncd %s\npip3 search %s>%s\n' % (dirName, liblib, tempName))
+
+    os.system("C:\getImportLib\search.bat")
 
 
 comp = re.compile(r'import (\S+?)\s')
 comp1 = re.compile(r'from (\S) import \S+?\s')
+
 p = []
 dictLog = {}
 temp = []
@@ -67,17 +78,23 @@ with open(fileName, 'w', encoding='utf-8') as f:
         f.write('Файл [')
         f.write(i)
         f.write(']:\n')
-        for j in range(len(dictLog[i])):
-            f.write('|')
-            f.write(dictLog[i][j])
-            if dictLog[i][j] not in temp:
-                f.write('| описание.....')
-                f.write('\n')
-                temp.append(dictLog[i][j])
-            else:
-                f.write('| <описание библиотеи выше>\n')
+        if len(dictLog[i]) == 0:
+            f.write('нет библиотек\n')
+        else:
+            for j in range(len(dictLog[i])):
+                f.write('|')
+                f.write('{:<17}'.format(dictLog[i][j]))
+                if dictLog[i][j] not in temp:
+                    tempParse(dictLog[i][j])
+                    comp2 = re.compile('$'+dictLog[i][j]+'(.+)*')
+                    a = re.findall(comp2, tempName)
+                    for z in a:
+                        f.write('%s @@@',z)
+                    f.write('\n')
+                    temp.append(dictLog[i][j])
+                else:
+                    f.write('| <описание библиотеи выше>\n')
 
-# TODO с помощью https://tech.yandex.ru/xml/ заюзать Яндкс.Поиск API
 
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)
