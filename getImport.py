@@ -24,6 +24,7 @@ def tempParse(liblib):
 comp = re.compile(r'import (\S+?)\s')
 comp1 = re.compile(r'from (\S) import \S+?\s')
 
+a=[]
 p = []
 dictLog = {}
 temp = []
@@ -86,10 +87,16 @@ with open(fileName, 'w', encoding='utf-8') as f:
                 f.write('{:<17}'.format(dictLog[i][j]))
                 if dictLog[i][j] not in temp:
                     tempParse(dictLog[i][j])
-                    comp2 = re.compile('$'+dictLog[i][j]+'(.+)*')
-                    a = re.findall(comp2, tempName)
+                    with open(tempName, 'w', encoding='utf-8') as f2:
+                        try:
+                            lines = f2.readlines()
+                            for line in lines:
+                                comp2 = re.compile('%s \S+\W+ ([^\n]+)' % dictLog[i][j])
+                                a = re.findall(comp2, line)
+                        except:
+                            print("Пустой temp файл")
                     for z in a:
-                        f.write('%s @@@',z)
+                        f.write('%s @@@', z)
                     f.write('\n')
                     temp.append(dictLog[i][j])
                 else:

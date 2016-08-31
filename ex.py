@@ -2,6 +2,7 @@ __autor__ = 'm.shoshin'
 import os
 import subprocess
 import time
+import re
 dirName = r'C:\getImportLib'
 libName = 'android'
 tempName = r'C:\getImportLib\tempLog.txt'
@@ -26,4 +27,11 @@ with open("C:\getImportLib\search.bat", 'w', encoding='utf-8') as f:
     f.write('@echo off\ncd %s\npip3 search %s>%s\n' % (dirName, libName, tempName))
 
 os.system("C:\getImportLib\search.bat")
-# print('!!!', a)
+# # print('!!!', a)
+# tempParse(dictLog[i][j])
+with open(tempName, 'w', encoding='utf-8') as f:
+    lines = f.readlines()
+    for line in lines:
+        comp2 = re.compile('android-dumpkey \S+\W+ ([^\n]+)')
+        a = re.findall(comp2, line)
+print(a)
