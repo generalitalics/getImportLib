@@ -4,7 +4,7 @@ import subprocess
 import time
 import re
 dirName = r'C:\getImportLib'
-libName = 'android'
+libName = 'itertools'
 tempName = r'C:\getImportLib\tempLog.txt'
 # f = open('C:/2_strings.py ', 'r', encoding='utf-8')
 # print(f.read())
@@ -30,7 +30,7 @@ os.system("C:\getImportLib\search.bat")
 # # print('!!!', a)
 # tempParse(dictLog[i][j])
 a = []
-with open(tempName, 'r') as f:
+with open(tempName, 'r', encoding='utf8') as f:
     lines = f.read()
     comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % libName)
     a = re.findall(comp2, lines)

@@ -74,7 +74,7 @@ print(dictLog)
 
 # Записываем лог
 os.remove(fileName)
-with open(fileName, 'w', encoding='utf-8') as f:
+with open(fileName, 'w', encoding='utf8') as f:
     for i in dictLog:
         f.write('Файл [%s]:\n' % i)
         if len(dictLog[i]) == 0:
@@ -84,16 +84,17 @@ with open(fileName, 'w', encoding='utf-8') as f:
                 f.write('|{:<17}|'.format(dictLog[i][j]))
                 if dictLog[i][j] not in temp:
                     tempParse(dictLog[i][j])
-                    with open(tempName, 'r') as f2:
+                    with open(tempName, 'r', encoding='utf8') as f2:
                         try:
-                            lines = f.read()
-                            comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % libName)
+                            lines = f2.read()
+                            comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % dictLog[i][j])
                             a = re.findall(comp2, lines)
+                            if a == []:
+                                f.write(' нет данных')
                         except:
                             print("Ошибка чтения temp файла")
-                    print(a)
                     for z in a:
-                        f.write('%s @@@ ', z)
+                        f.write('%s @@@ ' % z)
                     f.write('\n')
                     temp.append(dictLog[i][j])
                 else:
