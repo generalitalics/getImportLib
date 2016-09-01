@@ -16,7 +16,7 @@ def tempParse(liblib):
     if os.path.exists(tempName):
         os.remove(tempName)
     with open("C:\getImportLib\search.bat", 'w', encoding='utf-8') as f:
-        f.write('@echo\ncd %s\npip3 search %s>%s\n' % (dirName, liblib, tempName))
+        f.write('@echo off\ncd %s\npip3 search %s>%s\n' % (dirName, liblib, tempName))
 
     os.system("C:\getImportLib\search.bat")
 
@@ -88,7 +88,7 @@ with open(fileName, 'w', encoding='utf-8') as f:
                         try:
                             lines = f.read()
                             comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % libName)
-                            a = re.findall(comp2, lines).encode('utf-8')
+                            a = re.findall(comp2, lines)
                         except:
                             print("Ошибка чтения temp файла")
                     print(a)
