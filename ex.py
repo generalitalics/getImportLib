@@ -29,9 +29,9 @@ with open("C:\getImportLib\search.bat", 'w', encoding='utf-8') as f:
 os.system("C:\getImportLib\search.bat")
 # # print('!!!', a)
 # tempParse(dictLog[i][j])
-with open(tempName, 'w', encoding='utf-8') as f:
-    lines = f.readlines()
-    for line in lines:
-        comp2 = re.compile('android-dumpkey \S+\W+ ([^\n]+)')
-        a = re.findall(comp2, line)
+a = []
+with open(tempName, 'r') as f:
+    lines = f.read()
+    comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % libName)
+    a = re.findall(comp2, lines)
 print(a)

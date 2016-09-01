@@ -16,7 +16,7 @@ def tempParse(liblib):
     if os.path.exists(tempName):
         os.remove(tempName)
     with open("C:\getImportLib\search.bat", 'w', encoding='utf-8') as f:
-        f.write('@echo off\ncd %s\npip3 search %s>%s\n' % (dirName, liblib, tempName))
+        f.write('@echo\ncd %s\npip3 search %s>%s\n' % (dirName, liblib, tempName))
 
     os.system("C:\getImportLib\search.bat")
 
@@ -72,35 +72,32 @@ p = set(p)
 print(p)
 print(dictLog)
 
-# Заиписываем лог
+# Записываем лог
 os.remove(fileName)
 with open(fileName, 'w', encoding='utf-8') as f:
     for i in dictLog:
-        f.write('Файл [')
-        f.write(i)
-        f.write(']:\n')
+        f.write('Файл [%s]:\n' % i)
         if len(dictLog[i]) == 0:
             f.write('нет библиотек\n')
         else:
             for j in range(len(dictLog[i])):
-                f.write('|')
-                f.write('{:<17}'.format(dictLog[i][j]))
+                f.write('|{:<17}|'.format(dictLog[i][j]))
                 if dictLog[i][j] not in temp:
                     tempParse(dictLog[i][j])
-                    with open(tempName, 'w', encoding='utf-8') as f2:
+                    with open(tempName, 'r') as f2:
                         try:
-                            lines = f2.readlines()
-                            for line in lines:
-                                comp2 = re.compile('%s \S+\W+ ([^\n]+)' % dictLog[i][j])
-                                a = re.findall(comp2, line)
+                            lines = f.read()
+                            comp2 = re.compile('(?m)^%s \S+\W+ ([^\n]+)' % libName)
+                            a = re.findall(comp2, lines).encode('utf-8')
                         except:
-                            print("Пустой temp файл")
+                            print("Ошибка чтения temp файла")
+                    print(a)
                     for z in a:
-                        f.write('%s @@@', z)
+                        f.write('%s @@@ ', z)
                     f.write('\n')
                     temp.append(dictLog[i][j])
                 else:
-                    f.write('| <описание библиотеи выше>\n')
+                    f.write(' <описание библиотеи выше>\n')
 
 
 if not os.path.exists(res_dir):
